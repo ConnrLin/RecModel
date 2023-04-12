@@ -1,2 +1,0 @@
-from .multi_head_attention import MultiHeadAttention
-from .single_head_attention import SingleHeadAttention
