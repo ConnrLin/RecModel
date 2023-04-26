@@ -2,8 +2,8 @@
 Author: Felix
 Date: 2023-04-12 14:57:44
 LastEditors: Felix
-LastEditTime: 2023-04-12 16:11:46
-Description: Please enter description
+LastEditTime: 2023-04-26 09:09:02
+Description: Data loader for Bert4rec
 '''
 import torch.nn as nn
 from torch.utils.data import Dataset
@@ -13,6 +13,9 @@ import torch
 
 
 class BertDataset:
+    """
+        Factory to build Train, Test, Validate Dataset 
+    """
     def __init__(self, dataset, save_folder, max_len):
         dataset = dataset.load_dataset()
         self.train = dataset['train']
@@ -31,11 +34,24 @@ class BertDataset:
         self.test_negative_samples = test_negative_sampler.get_negative_samples()
 
     def get_train_datasets(self):
+        """ generate training dataset 
+
+        Returns:
+            torch.utils.data.Dataset: training set
+        """
         train_dataset = BertTrainDataset(
             self.train, self.max_len, 0.15, self.MASK, self.item_count, self.rng)
         return train_dataset
 
     def get_eval_datasets(self, mode):
+        """generate eval dataset 
+
+        Args:
+            mode (str): a string to specific the type of dataset, "test" or "val".
+
+        Returns:
+            torch.utils.data.Dataset: evaliating set
+        """
         if mode == 'val':
             eval_datasets = BertEvalDataset(
                 self.train, self.val, self.max_len, self.MASK, self.test_negative_samples)
@@ -45,6 +61,11 @@ class BertDataset:
         return eval_datasets
 
     def get_datasets(self):
+        """ return training set, validating set and testing set
+
+        Returns:
+            torch.utils.data.Dataset
+        """
         train_dataset = self.get_train_datasets()
         val_dataset = self.get_eval_datasets('val')
         test_dataset = self.get_eval_datasets('test')
@@ -52,6 +73,9 @@ class BertDataset:
 
 
 class BertTrainDataset(Dataset):
+    """ training dataset class
+    """
+
     def __init__(self, u2seq, max_len, mask_prob, mask_token, num_items, rng):
         self.u2seq = u2seq
         self.users = sorted(self.u2seq.keys())
@@ -102,6 +126,9 @@ class BertTrainDataset(Dataset):
 
 
 class BertEvalDataset(Dataset):
+    """ evaliating dataset class
+
+    """
     def __init__(self, u2seq, u2answer, max_len, mask_token, negative_samples):
         self.u2seq = u2seq
         self.users = sorted(self.u2seq.keys())

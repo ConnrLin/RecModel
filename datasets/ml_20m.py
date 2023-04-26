@@ -2,7 +2,7 @@
 Author: Felix
 Date: 2023-04-12 13:47:14
 LastEditors: Felix
-LastEditTime: 2023-04-12 16:37:42
+LastEditTime: 2023-04-26 08:48:56
 Description: DataSet class for MovieLens 20m dataset
 '''
 import torch.nn as nn
@@ -23,9 +23,9 @@ class ML20MDataset:
         self.min_uc = min_uc
 
     def load_dataset(self):
-        if not os.path.exists(os.path.join(self.file_dir, 'dataset.pickle')):
+        if not os.path.exists(os.path.join(self.file_dir, 'dataset.pkl')):
             self.preprocess()
-        with open(os.path.join(self.file_dir, 'dataset.pickle'), 'rb') as f:
+        with open(os.path.join(self.file_dir, 'dataset.pkl'), 'rb') as f:
             dataset = pickle.load(f)
         return dataset
 

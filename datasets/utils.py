@@ -2,8 +2,8 @@
 Author: Felix
 Date: 2023-04-12 15:07:24
 LastEditors: Felix
-LastEditTime: 2023-04-12 15:56:32
-Description: Please enter description
+LastEditTime: 2023-04-26 09:00:42
+Description: Generate negative sample for testing
 '''
 from tqdm import trange
 import numpy as np
@@ -25,11 +25,6 @@ class RandomNegativeSampler:
         negative_samples = {}
         print('Sampling negative items')
         for user in trange(self.user_count):
-            # if isinstance(self.train[user][1], tuple):
-            #     seen = set(x[0] for x in self.train[user])
-            #     seen.update(x[0] for x in self.val[user])
-            #     seen.update(x[0] for x in self.test[user])
-            # else:
             seen = set(self.train[user])
             seen.update(self.val[user])
             seen.update(self.test[user])

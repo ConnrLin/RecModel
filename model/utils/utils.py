@@ -2,7 +2,7 @@
 Author: Felix
 Date: 2023-04-11 15:13:46
 LastEditors: Felix
-LastEditTime: 2023-04-12 16:07:18
+LastEditTime: 2023-04-26 08:53:11
 Description: tools for training and testing
 '''
 from tqdm import tqdm
@@ -198,14 +198,14 @@ class Trainer:
         metrics = recalls_and_ndcgs_for_ks(scores, labels, self.metric_ks)
         return metrics
 
-    def add_extra_loggers(self):
-        pass
+    # def add_extra_loggers(self):
+    #     pass
 
-    def log_extra_train_info(self, log_data):
-        pass
+    # def log_extra_train_info(self, log_data):
+    #     pass
 
-    def log_extra_val_info(self, log_data):
-        pass
+    # def log_extra_val_info(self, log_data):
+    #     pass
 
 
 
